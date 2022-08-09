@@ -13,6 +13,10 @@
 		CE976E8528A29EA0005C8984 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE976E8428A29EA0005C8984 /* Preview Assets.xcassets */; };
 		CE976E8728A29EA0005C8984 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE976E8628A29EA0005C8984 /* Persistence.swift */; };
 		CE976E8A28A29EA0005C8984 /* TaskManager_CoreData_SwiftUI.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE976E8828A29EA0005C8984 /* TaskManager_CoreData_SwiftUI.xcdatamodeld */; };
+		CECA2F0828A2AB1F004F94EF /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA2F0728A2AB1F004F94EF /* Home.swift */; };
+		CECA2F0E28A2AB5D004F94EF /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA2F0D28A2AB5D004F94EF /* TaskViewModel.swift */; };
+		CECA2F1028A2B0C8004F94EF /* DynamicFilteredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA2F0F28A2B0C8004F94EF /* DynamicFilteredView.swift */; };
+		CECA2F1428A2B901004F94EF /* NewTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA2F1328A2B901004F94EF /* NewTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +27,10 @@
 		CE976E8428A29EA0005C8984 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CE976E8628A29EA0005C8984 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		CE976E8928A29EA0005C8984 /* TaskManager_CoreData_SwiftUI.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaskManager_CoreData_SwiftUI.xcdatamodel; sourceTree = "<group>"; };
+		CECA2F0728A2AB1F004F94EF /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		CECA2F0D28A2AB5D004F94EF /* TaskViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
+		CECA2F0F28A2B0C8004F94EF /* DynamicFilteredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicFilteredView.swift; sourceTree = "<group>"; };
+		CECA2F1328A2B901004F94EF /* NewTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTask.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,10 +63,12 @@
 		CE976E7C28A29E9A005C8984 /* TaskManager_CoreData_SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				CECA2F0C28A2AB55004F94EF /* ViewModel */,
+				CECA2F0628A2AB13004F94EF /* View */,
 				CE976E7D28A29E9A005C8984 /* TaskManager_CoreData_SwiftUIApp.swift */,
 				CE976E7F28A29E9A005C8984 /* ContentView.swift */,
-				CE976E8128A29EA0005C8984 /* Assets.xcassets */,
 				CE976E8628A29EA0005C8984 /* Persistence.swift */,
+				CE976E8128A29EA0005C8984 /* Assets.xcassets */,
 				CE976E8828A29EA0005C8984 /* TaskManager_CoreData_SwiftUI.xcdatamodeld */,
 				CE976E8328A29EA0005C8984 /* Preview Content */,
 			);
@@ -71,6 +81,24 @@
 				CE976E8428A29EA0005C8984 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		CECA2F0628A2AB13004F94EF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CECA2F0728A2AB1F004F94EF /* Home.swift */,
+				CECA2F0F28A2B0C8004F94EF /* DynamicFilteredView.swift */,
+				CECA2F1328A2B901004F94EF /* NewTask.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CECA2F0C28A2AB55004F94EF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CECA2F0D28A2AB5D004F94EF /* TaskViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,7 +172,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE976E8728A29EA0005C8984 /* Persistence.swift in Sources */,
+				CECA2F0E28A2AB5D004F94EF /* TaskViewModel.swift in Sources */,
 				CE976E8028A29E9A005C8984 /* ContentView.swift in Sources */,
+				CECA2F1028A2B0C8004F94EF /* DynamicFilteredView.swift in Sources */,
+				CECA2F0828A2AB1F004F94EF /* Home.swift in Sources */,
+				CECA2F1428A2B901004F94EF /* NewTask.swift in Sources */,
 				CE976E7E28A29E9A005C8984 /* TaskManager_CoreData_SwiftUIApp.swift in Sources */,
 				CE976E8A28A29EA0005C8984 /* TaskManager_CoreData_SwiftUI.xcdatamodeld in Sources */,
 			);
