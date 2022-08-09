@@ -3,9 +3,9 @@
   A mobile application to create notes for the users, a set of activities for everyday life.
   
   ## What it does? 
-    - Creating Data by Title, Description and setting a new Date;
-    - Editing a current or future task by setting a new Title and Description;
-    - Deleting task.
+    - Create Data by Title, Description and setting a new Date;
+    - Edit a current or future task by setting a new Title and Description;
+    - Delete task.
   
   ### 🔧 guard let technology = SwiftUI && Core Data ?? false else { return }
   
