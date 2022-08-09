@@ -13,6 +13,11 @@ struct Home: View {
     @StateObject var taskModel: TaskViewModel = TaskViewModel()
     @Namespace var animation
     
+    // MARK: Core Data Context
+    @Environment(\.managedObjectContext) var context
+    // MARK: Edit Button Context
+    @Environment(\.editMode) var editButton
+    
     //MARK: - Body
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -87,7 +92,11 @@ struct Home: View {
             , alignment: .bottomTrailing
         )
         .sheet(isPresented: $taskModel.addNewTask) {
+            // Clearing Edit Data
+            taskModel.editTask = nil
+        } content: {
             NewTask()
+                .environmentObject(taskModel)
         }
     }
     
@@ -108,22 +117,54 @@ struct Home: View {
     func TaskCardView(task: Task) -> some View {
         
         //MARK: Since CoreData Values will Give Optional Data
-        HStack(alignment: .top, spacing: 30) {
+        HStack(alignment: editButton?.wrappedValue == .active ? .center : .top, spacing: 30) {
             HStack {
-                VStack(spacing: 10) {
-                    Circle()
-                        .fill(taskModel.isCurrentHour(date: task.taskDate ?? Date()) ? .black : .clear)
-                        .frame(width: 15, height: 15)
-                        .background(
-                            Circle()
-                                .stroke(.black, lineWidth: 1)
-                                .padding(-3)
-                        )
-                        .scaleEffect(!taskModel.isCurrentHour(date: task.taskDate ?? Date()) ? 0.8 : 1)
-                    
-                    Rectangle()
-                        .fill(.black)
-                        .frame(width: 3)
+                
+                // If Edit mode enabled then showing Delete Button
+                if editButton?.wrappedValue == .active {
+                   
+                    //Edit Button for Current and Future Tasks
+                    VStack(spacing: 10) {
+                        
+                        if task.taskDate?.compare(Date()) == .orderedDescending || Calendar.current.isDateInToday(task.taskDate ?? Date()) {
+                            Button {
+                                taskModel.editTask = task
+                                taskModel.addNewTask.toggle()
+                            } label: {
+                                Image(systemName: "pencil.circle.fill")
+                                    .font(.title)
+                                    .foregroundColor(.primary)
+                            }
+                        }
+                        
+                        Button {
+                            // MARK: Deleting Task
+                            context.delete(task)
+                            
+                            // Saving
+                            try? context.save()
+                        } label: {
+                            Image(systemName: "minus.circle.fill")
+                                .font(.title)
+                                .foregroundColor(.red)
+                        }
+                    }
+                } else {
+                    VStack(spacing: 10) {
+                        Circle()
+                            .fill(taskModel.isCurrentHour(date: task.taskDate ?? Date()) ? (task.isCompleted ? .green : .black) : .clear)
+                            .frame(width: 15, height: 15)
+                            .background(
+                                Circle()
+                                    .stroke(.black, lineWidth: 1)
+                                    .padding(-3)
+                            )
+                            .scaleEffect(!taskModel.isCurrentHour(date: task.taskDate ?? Date()) ? 0.8 : 1)
+                        
+                        Rectangle()
+                            .fill(.black)
+                            .frame(width: 3)
+                    }
                 }
                 
                 VStack {
@@ -143,31 +184,29 @@ struct Home: View {
                     
                     if taskModel.isCurrentHour(date: task.taskDate ?? Date()) {
                         // MARK: Team Members
-                        HStack(spacing: 0) {
-                            HStack(spacing: -10) {
-                                ForEach(["User1", "User2", "User3"], id: \.self) { user in
-                                    Image(user)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 45, height: 45)
-                                        .clipShape(Circle())
-                                        .background(
-                                            Circle()
-                                                .stroke(.black, lineWidth: 5)
-                                        )
-                                }
-                            }
-                            .hLeading()
-                            
+                        HStack(spacing: 12) {
                             //MARK: Check Button
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.black)
-                                    .padding()
-                                    .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
+                           
+                            if !task.isCompleted {
+                                Button {
+                                    // MARK: Updating Tasks
+                                    task.isCompleted = true
+                                    
+                                    // Saving
+                                    try? context.save()
+                                } label: {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.black)
+                                        .padding()
+                                        .background(task.isCompleted ? Color.gray : Color.white, in: RoundedRectangle(cornerRadius: 10))
+                                }
+                                .hLeading()
                             }
+                            
+                            Text(task.isCompleted ? "Marked as Completed" : "Mark Task as Completed")
+                                .font(.system(size: task.isCompleted ? 14: 16, weight: .light))
+                                .foregroundColor(.white)
+                                .hLeading()
                         }
                         .padding(.top)
                     }
@@ -198,15 +237,8 @@ struct Home: View {
             }
             .hLeading()
             
-            Button {
-                
-            } label: {
-                Image("Profile")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 45, height: 45)
-                    .clipShape(Circle())
-            }
+           // MARK: Edit Button
+            EditButton()
         }
         .padding()
         .padding(.top, getSafeArea().top)
